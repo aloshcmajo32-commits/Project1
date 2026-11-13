@@ -1,22 +1,23 @@
-// import './App.js';
-import { BrowserRouter,Route,Routes } from 'react-router-dom';
-import Login from './pages/Login/Login.jsx';
-import Register from './pages/Register/Register.jsx';
-import Consumerdashboard from './pages/Consumerdashboard/Consumerdashboard.jsx';
-import ProviderDashboard from './pages/ProviderDashboard/ProviderDashboard.jsx';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login/Login';
+import Registration from './pages/Register/Register';
+import Consumerdashboard from './pages/Consumerdashboard/Consumerdashboard';
+import ProviderDashboard from './pages/ProviderDashboard/ProviderDashboard';
 
-function App(){
+function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/consumer-dashboard" element={<Consumerdashboard />} />
-          <Route path="/provider-dashboard" element={<ProviderDashboard />} />    
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/consumer" element={<Consumerdashboard />} />
+        <Route path="/provider" element={<ProviderDashboard />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>   
+    </BrowserRouter>
   );
-
 }
 
-export default App
+export default App;
