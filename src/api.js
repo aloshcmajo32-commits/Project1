@@ -1,4 +1,3 @@
-// All database calls live here. Backend = json-server running on port 3001 (see db.json).
 const BASE = 'https://lz4qtzt2-5000.inc1.devtunnels.ms';
 
 async function request(path, options) {
