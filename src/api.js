@@ -1,7 +1,4 @@
 // All database calls live here. Backend = json-server running on port 3001 (see db.json).
-// BASE is empty on purpose: package.json has  "proxy": "http://localhost:3001"
-// so every /users and /requests call is forwarded to json-server by the React dev server.
-// This works on localhost AND through a dev tunnel (only port 3000 needs to be forwarded).
 const BASE = 'https://lz4qtzt2-5000.inc1.devtunnels.ms';
 
 async function request(path, options) {
@@ -15,19 +12,11 @@ async function request(path, options) {
 
 /* ---------- AUTH ---------- */
 export async function loginUser(email, password) {
-  // Returns { user, reason, count } so the UI can say exactly what went wrong.
-  const users = await request('/users');
-  if (!Array.isArray(users)) {
-    return { user: null, reason: 'bad-response', count: 0 };
-  }
-  console.log('Users loaded from database:', users);
-
-  const wantedEmail = email.trim().toLowerCase();
-  const found = users.find((u) => String(u.email || '').trim().toLowerCase() === wantedEmail);
-
-  if (!found) return { user: null, reason: 'no-email', count: users.length };
-  if (String(found.password) !== password) return { user: null, reason: 'bad-password', count: users.length };
-  return { user: found, reason: 'ok', count: users.length };
+  const users = await fetch(
+    `${BASE}/users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+  );
+  const userdata = await users.json();
+  return userdata[0] || null;
 }
 
 export async function registerUser(data) {
